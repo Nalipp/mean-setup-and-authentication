@@ -1,9 +1,11 @@
 <div class="container">
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
-      <article class="panel panel-default">
-        <app-message [message]="message"></app-message>
-      </article>
+      <app-message 
+        *ngFor="let message of messages"
+        [message]="message" 
+        (editClicked)="message.content = $event">
+      </app-message>
     </div>
   </div>
 </div>
