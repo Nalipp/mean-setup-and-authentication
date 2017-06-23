@@ -37,4 +37,63 @@ router.post('/', function(req, res, next) {
   });
 });
 
+router.patch('/:id', function(req, res, next) {
+  Message.findById(req.params.id, function(err, message) {
+    if (err) {
+      return res.status(500).json({
+        title: 'Message edit error has occured',
+        error: err
+      });
+    }
+    if (!message) {
+      return res.status(500).json({
+        title: 'Message not found',
+        error: {message: 'Message for edit not found in database'}
+      });
+    }
+    message.content = req.body.content;
+    message.save(function(err, result) {
+      if (err) {
+        return res.status(500).json({
+          title: 'Message edit falied during save',
+          error: err
+        });
+      }
+      return res.status(200).json({
+        message: 'Message update successful',
+        obj: result
+      });
+    });
+  });
+});
+
+router.delete('/:id', function(req, res, next) {
+  Message.findById(req.params.id, function(err, message) {
+    if (err) {
+      return res.status(500).json({
+        title: 'Message delete error has occured',
+        error: err
+      });
+    }
+    if (!message) {
+      return res.status(500).json({
+        title: 'Message not found',
+        error: {message: 'Message for delete not found in database'}
+      });
+    }
+    message.remove(function(err, result) {
+      if (err) {
+        return res.status(500).json({
+          title: 'Message delete falied during delete',
+          error: err
+        });
+      }
+      return res.status(200).json({
+        message: 'Message delete successful',
+        obj: result
+      });
+    });
+  });
+});
+
 module.exports = router;
