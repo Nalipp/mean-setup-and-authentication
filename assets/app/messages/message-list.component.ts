@@ -9,8 +9,7 @@ import { MessageService } from './message.service';
     <div class="col-md-8 col-md-offset-2">
       <app-message 
         *ngFor="let message of messages"
-        [message]="message" 
-        (editClicked)="message.content = $event">
+        [message]="message">
       </app-message>
     </div>
   `
